@@ -70,5 +70,5 @@ Supporting classes (not included in this snippet but required to run):
 
 1. Clone the repo:
    ```bash
-   git clone https://github.com/yourusername/EasyKanban.git
+   git clone https://github.com/Nia-byte/EasyKanban.git 
    cd EasyKanban
