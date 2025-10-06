@@ -1,6 +1,7 @@
 com\example\easykanban\EasykanbanApplication.class
 com\example\easykanban\entity\User.class
 com\example\easykanban\repository\BoardRepository.class
+com\example\easykanban\controller\TaskController.class
 com\example\easykanban\repository\UserRepository.class
 com\example\easykanban\entity\Board.class
 com\example\easykanban\service\UserService.class
@@ -9,3 +10,4 @@ com\example\easykanban\entity\TaskStatus.class
 com\example\easykanban\service\BoardService.class
 com\example\easykanban\entity\Task.class
 com\example\easykanban\repository\TaskRepository.class
+com\example\easykanban\controller\UserController.class
