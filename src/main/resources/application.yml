@@ -1,0 +1,23 @@
+## YAML Template.
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/easykanban?useSSL=false&serverTimezone=UTC
+    username: root
+    password: YourNewPassword123!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+logging:
+  level:
+    com.easykanban: DEBUG
