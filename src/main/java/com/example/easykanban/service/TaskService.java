@@ -17,22 +17,59 @@ import java.util.Optional;
  */
 @Service
 public class TaskService {
-    @Autowired //Inject the UserRepository instance automatically
+    @Autowired
     private TaskRepository taskRepository;
     
-    public Task createTask(Task task) { //Validates description and saves task
-        if (task.getTaskDescription() != null && task.getTaskDescription().length() > 100) {
-            throw new IllegalArgumentException("Task description must be less than 100 characters");
+    public Task createTask(Task task) {
+        if (task.getTaskDescription() != null && task.getTaskDescription().length() > 50) {
+            throw new IllegalArgumentException("Task description must be less than 50 characters");
         }
         
-        // Save task first to get the auto-generated ID
+        // Generate a temporary task ID before first save
+        task.setTaskId(generateTemporaryTaskId(task));
+        
+        // Save task first to get the auto-generated database ID
         Task savedTask = taskRepository.save(task);
         
-        // Now update the task ID with the generated database ID
-        savedTask.updateTaskId();
+        // Now update the task ID with the real database ID
+        savedTask.setTaskId(generateFinalTaskId(savedTask));
         
         // Save again with the updated task ID
         return taskRepository.save(savedTask);
+    }
+    
+    private String generateTemporaryTaskId(Task task) {
+        if (task.getTaskName() == null || task.getTaskName().length() < 2) {
+            return "UN:0:UNK";
+        }
+        
+        if (task.getDeveloperDetails() == null || !task.getDeveloperDetails().contains(" ")) {
+            return task.getTaskName().substring(0, 2).toUpperCase() + ":0:UNK";
+        }
+        
+        String firstName = task.getDeveloperDetails().substring(0, task.getDeveloperDetails().indexOf(" "));
+        String lastThreeLetters = firstName.length() >= 3 ? 
+            firstName.substring(firstName.length() - 3).toUpperCase() : 
+            firstName.toUpperCase();
+            
+        return task.getTaskName().substring(0, 2).toUpperCase() + ":0:" + lastThreeLetters;
+    }
+    
+    private String generateFinalTaskId(Task task) {
+        if (task.getTaskName() == null || task.getTaskName().length() < 2) {
+            return "UN:" + task.getId() + ":UNK";
+        }
+        
+        if (task.getDeveloperDetails() == null || !task.getDeveloperDetails().contains(" ")) {
+            return task.getTaskName().substring(0, 2).toUpperCase() + ":" + task.getId() + ":UNK";
+        }
+        
+        String firstName = task.getDeveloperDetails().substring(0, task.getDeveloperDetails().indexOf(" "));
+        String lastThreeLetters = firstName.length() >= 3 ? 
+            firstName.substring(firstName.length() - 3).toUpperCase() : 
+            firstName.toUpperCase();
+            
+        return task.getTaskName().substring(0, 2).toUpperCase() + ":" + task.getId() + ":" + lastThreeLetters;
     }
     
     public List<Task> getAllTasks() {
@@ -47,11 +84,11 @@ public class TaskService {
         return taskRepository.findByTaskStatus(status);
     }
     
-    public List<Task> getTasksByDeveloper(String developerName) { //Searches tasks by developer name
+    public List<Task> getTasksByDeveloper(String developerName) {
         return taskRepository.findByDeveloperDetailsContaining(developerName);
     }
     
-    public Optional<Task> updateTaskStatus(Long taskId, TaskStatus status) { //Changes task status
+    public Optional<Task> updateTaskStatus(Long taskId, TaskStatus status) {
         Optional<Task> taskOpt = taskRepository.findById(taskId);
         if (taskOpt.isPresent()) {
             Task task = taskOpt.get();
@@ -61,7 +98,7 @@ public class TaskService {
         return Optional.empty();
     }
     
-    public boolean deleteTask(Long taskId) { //Removes task
+    public boolean deleteTask(Long taskId) {
         if (taskRepository.existsById(taskId)) {
             taskRepository.deleteById(taskId);
             return true;
@@ -69,12 +106,12 @@ public class TaskService {
         return false;
     }
     
-    public Integer getTotalHours(Long boardId) { //Calculates total hours
+    public Integer getTotalHours(Long boardId) {
         Integer total = taskRepository.getTotalHoursByBoardId(boardId);
         return total != null ? total : 0;
     }
     
-    public List<Task> getTasksWithLongestDuration(Long boardId) { //Finds longest task
+    public List<Task> getTasksWithLongestDuration(Long boardId) {
         return taskRepository.findTasksWithLongestDuration(boardId);
     }
 }

@@ -7,6 +7,7 @@ package com.example.easykanban.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
 import java.util.List;
 /**
@@ -35,15 +36,18 @@ public class User {
     
     @NotBlank
     @Size(min = 8)
+    @JsonIgnore
     private String password;
     
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
     
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Task> tasks;
     
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Board> boards;
     
     // Default constructor

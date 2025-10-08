@@ -9,5 +9,4 @@ public class EasykanbanApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EasykanbanApplication.class, args);
 	}
-
 }

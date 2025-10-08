@@ -6,6 +6,7 @@ package com.example.easykanban.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -30,9 +31,11 @@ public class Board {
     
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
     
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Task> tasks;
     
     // Default constructor
