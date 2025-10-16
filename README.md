@@ -18,10 +18,8 @@ A modern RESTful API backend for kanban task management, built with Spring Boot 
 - [Building and Running](#building-and-running)
 - [API Endpoints](#api-endpoints)
 - [Security & Authentication](#security--authentication)
-- [Testing](#testing)
 - [Contributing](#contributing)
 - [License](#license)
-- [Contact](#contact)
 
 ## 🎯 Overview
 
@@ -131,8 +129,8 @@ Before you begin, ensure you have the following installed:
 ### 1. Clone the Repository
 
 ```
-git clone https://github.com/yourusername/easykanban-backend.git
-cd easykanban-backend
+git clone [https://github.com/yourusername/easykanban-backend.git](https://github.com/Nia-byte/EasyKanban.git)
+cd easykanban
 ```
 
 ### 2. Configure Database
@@ -521,7 +519,7 @@ Contributions are welcome! Please follow these steps:
 
 1. **Fork the Repository**
 ```bash
-git clone https://github.com/yourusername/easykanban-backend.git
+git clone [https://github.com/yourusername/easykanban-backend.git](https://github.com/Nia-byte/EasyKanban.git)
 ```
 
 2. **Create a Feature Branch**
