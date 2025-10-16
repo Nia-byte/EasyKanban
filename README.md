@@ -64,20 +64,20 @@ A modern RESTful API backend for kanban task management, built with Spring Boot 
 - **User-specific Boards**: Filter boards by user
 
 ### Analytics & Reports
-- 📈 **Board Analytics**: Task counts, completion rates, hours by board
-- 🌐 **System Analytics**: Overall system metrics and statistics
-- 👨‍💻 **Developer Analytics**: Individual developer performance metrics
-- 📊 **Completion Trends**: Task completion tracking over time
-- 🏆 **Top Developers**: Leaderboard of most productive developers
-- 💯 **Completion Rate**: Percentage of completed tasks
-- ⏱️ **Average Duration**: Average task duration calculations
+- **Board Analytics**: Task counts, completion rates, hours by board
+- **System Analytics**: Overall system metrics and statistics
+- **Developer Analytics**: Individual developer performance metrics
+- **Completion Trends**: Task completion tracking over time
+- **Top Developers**: Leaderboard of most productive developers
+- **Completion Rate**: Percentage of completed tasks
+- **Average Duration**: Average task duration calculations
 
 ### Security Features
-- 🔒 **JWT Token Generation**: Secure token creation with expiration
-- 🛡️ **Token Validation**: Middleware for request authentication
-- 🚫 **CORS Configuration**: Cross-origin request handling
-- 🔐 **BCrypt Encryption**: Industry-standard password hashing
-- 🎫 **Stateless Sessions**: Token-based stateless authentication
+- **JWT Token Generation**: Secure token creation with expiration
+- **Token Validation**: Middleware for request authentication
+- **CORS Configuration**: Cross-origin request handling
+- **BCrypt Encryption**: Industry-standard password hashing
+- **Stateless Sessions**: Token-based stateless authentication
 
 ## 🛠 Technology Stack
 
@@ -119,8 +119,7 @@ Before you begin, ensure you have the following installed:
 - **Maven**: 3.8 or later
 - **MySQL**: 8.0 or later
 - **IDE**: IntelliJ IDEA, Eclipse, or VS Code with Java extensions
-- **Postman/Insomnia**: For API testing (optional)
-- **Git**: For version control
+- **Postman**: For API testing
 
 ### Minimum System Requirements
 - 4GB RAM minimum (8GB recommended)
@@ -131,7 +130,7 @@ Before you begin, ensure you have the following installed:
 
 ### 1. Clone the Repository
 
-```bash
+```
 git clone https://github.com/yourusername/easykanban-backend.git
 cd easykanban-backend
 ```
@@ -139,13 +138,13 @@ cd easykanban-backend
 ### 2. Configure Database
 
 Create MySQL database:
-```sql
+```
 CREATE DATABASE easykanban;
 USE easykanban;
 ```
 
 Run the database schema script:
-```bash
+```
 mysql -u root -p easykanban < EASYKANBAN_SCRIPT.sql
 ```
 
@@ -175,7 +174,7 @@ server.port=8080
 
 ### 4. Install Dependencies
 
-```bash
+```
 mvn clean install
 ```
 
@@ -222,56 +221,9 @@ easykanban-backend/
 
 ## 🗄️ Database Setup
 
-### Database Schema
-
-The application uses MySQL with the following structure:
-
-#### Users Table
-```sql
-CREATE TABLE users (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    first_name VARCHAR(255) NOT NULL,
-    last_name VARCHAR(255) NOT NULL,
-    username VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-#### Boards Table
-```sql
-CREATE TABLE boards (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    user_id BIGINT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
-);
-```
-
-#### Tasks Table
-```sql
-CREATE TABLE tasks (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    task_name VARCHAR(255) NOT NULL,
-    task_description VARCHAR(255),
-    task_id VARCHAR(255) UNIQUE NOT NULL,
-    developer_details VARCHAR(255) NOT NULL,
-    task_duration INT NOT NULL,
-    task_status ENUM('TO_DO', 'DOING', 'DONE') DEFAULT 'TO_DO',
-    board_id BIGINT,
-    user_id BIGINT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (board_id) REFERENCES boards(id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
-);
-```
-
 ### Running the Schema Script
 
-```bash
+```
 # Connect to MySQL
 mysql -u root -p
 
@@ -281,34 +233,11 @@ source /path/to/EASYKANBAN_SCRIPT.sql
 
 ## 🚀 Building and Running
 
-### Using Maven
-
-```bash
-# Build the project
-mvn clean package
-
-# Run the application
-mvn spring-boot:run
-
-# Run on custom port
-mvn spring-boot:run -Dspring-boot.run.arguments=--server.port=9090
 ```
+# Right click 
+EasykanbanApplication.java
 
-### Using Java
-
-```bash
-# Build JAR file
-mvn clean package -DskipTests
-
-# Run JAR
-java -jar target/easykanban-0.0.1-SNAPSHOT.jar
-```
-
-### Development Mode
-
-```bash
-# Run with hot reload
-mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.devtools.restart.enabled=true"
+# Select run file
 ```
 
 The application will start at `http://localhost:8080`
@@ -318,53 +247,53 @@ The application will start at `http://localhost:8080`
 ### Authentication Endpoints
 
 #### Register User
-```http
+```
 POST /api/users/register
 Content-Type: application/json
 
 {
-    "firstName": "John",
-    "lastName": "Doe",
-    "username": "john_",
-    "password": "Password123!"
+    "firstName": "Nia",
+    "lastName": "Diale",
+    "username": "ni_ni",
+    "password": "Password123*"
 }
 ```
 
 **Response:**
-```json
+```
 {
     "message": "User registered successfully",
     "token": "eyJhbGciOiJIUzUxMiJ9...",
     "user": {
         "id": 1,
-        "username": "john_",
-        "firstName": "John",
-        "lastName": "Doe"
+        "username": "ni_ni",
+        "firstName": "Nia",
+        "lastName": "Diale"
     }
 }
 ```
 
 #### Login User
-```http
+```
 POST /api/users/login
 Content-Type: application/json
 
 {
-    "username": "john_",
-    "password": "Password123!"
+    "username": "ni_ni",
+    "password": "Password123*"
 }
 ```
 
 **Response:**
-```json
+```
 {
     "message": "Login successful",
     "token": "eyJhbGciOiJIUzUxMiJ9...",
     "user": {
         "id": 1,
-        "username": "john_",
-        "firstName": "John",
-        "lastName": "Doe"
+        "username": "ni_ni",
+        "firstName": "Nia",
+        "lastName": "Diale"
     }
 }
 ```
@@ -372,50 +301,50 @@ Content-Type: application/json
 ### Board Endpoints
 
 #### Create Board
-```http
+```
 POST /api/boards
 Authorization: Bearer {token}
 Content-Type: application/json
 
 {
-    "name": "Project Alpha",
-    "description": "Main development board",
+    "name": "Sprint 1 ",
+    "description": "Planning & Research ",
     "userId": 1
 }
 ```
 
 #### Get All Boards
-```http
+```
 GET /api/boards
 Authorization: Bearer {token}
 ```
 
 #### Get Board by ID
-```http
+```
 GET /api/boards/{boardId}
 Authorization: Bearer {token}
 ```
 
 #### Get Boards by User
-```http
+```
 GET /api/boards/user/{userId}
 Authorization: Bearer {token}
 ```
 
 #### Update Board
-```http
+```
 PUT /api/boards/{boardId}
 Authorization: Bearer {token}
 Content-Type: application/json
 
 {
-    "name": "Updated Board Name",
-    "description": "Updated description"
+    "name": "Sprint 1 - City Of Tshwane",
+    "description": "Reasearch system"
 }
 ```
 
 #### Delete Board
-```http
+```
 DELETE /api/boards/{boardId}
 Authorization: Bearer {token}
 ```
@@ -423,14 +352,14 @@ Authorization: Bearer {token}
 ### Task Endpoints
 
 #### Create Task
-```http
+```
 POST /api/tasks
 Authorization: Bearer {token}
 Content-Type: application/json
 
 {
     "taskName": "Login Feature",
-    "taskDescription": "Implement user authentication",
+    "taskDescription": "Design the UI",
     "developerDetails": "Robyn Harrison",
     "taskDuration": 8,
     "taskStatus": "TO_DO",
@@ -440,46 +369,46 @@ Content-Type: application/json
 ```
 
 **Response:**
-```json
+```
 {
     "id": 1,
     "taskName": "Login Feature",
-    "taskDescription": "Implement user authentication",
+    "taskDescription": "Design the UI",
     "taskId": "LO:1:BYN",
     "developerDetails": "Robyn Harrison",
     "taskDuration": 8,
     "taskStatus": "TO_DO",
-    "createdAt": "2025-10-16T10:30:00"
+    "createdAt": "2025-03-22T01:30:00"
 }
 ```
 
 #### Get All Tasks
-```http
+```
 GET /api/tasks
 Authorization: Bearer {token}
 ```
 
 #### Get Tasks by Board
-```http
-GET /api/tasks/board/{boardId}
+```
+GET /api/tasks/board/1
 Authorization: Bearer {token}
 ```
 
 #### Get Tasks by Status
-```http
-GET /api/tasks/status/{status}
+```
+GET /api/tasks/status/TO_DO
 Authorization: Bearer {token}
 ```
 
 #### Get Tasks by Developer
-```http
-GET /api/tasks/developer/{developerName}
+```
+GET /api/tasks/developer/Robyn Harrison
 Authorization: Bearer {token}
 ```
 
 #### Update Task Status
-```http
-PUT /api/tasks/{taskId}/status
+```
+PUT /api/tasks/LO:1:BYN/status
 Authorization: Bearer {token}
 Content-Type: application/json
 
@@ -489,96 +418,53 @@ Content-Type: application/json
 ```
 
 #### Delete Task
-```http
-DELETE /api/tasks/{taskId}
+```
+DELETE /api/tasks/LO:1:BYN
 Authorization: Bearer {token}
 ```
 
 #### Get Total Hours by Board
-```http
-GET /api/tasks/board/{boardId}/total-hours
+```
+GET /api/tasks/board/1/total-hours
 Authorization: Bearer {token}
 ```
 
 **Response:**
-```json
+```
 {
     "totalHours": 45
 }
 ```
 
 #### Get Tasks with Longest Duration
-```http
-GET /api/tasks/board/{boardId}/longest-duration
+```
+GET /api/tasks/board/1/longest-duration
 Authorization: Bearer {token}
 ```
 
 ### Analytics Endpoints
 
 #### Get Board Analytics
-```http
-GET /api/analytics/board/{boardId}
+```
+GET /api/analytics/board/1
 Authorization: Bearer {token}
 ```
 
-**Response:**
-```json
-{
-    "boardId": 1,
-    "totalTasks": 15,
-    "totalHours": 120,
-    "tasksByStatus": {
-        "TO_DO": 5,
-        "DOING": 3,
-        "DONE": 7
-    },
-    "completionRate": 46.67,
-    "averageTaskDuration": 8.0,
-    "tasksByDeveloper": {
-        "John Doe": 5,
-        "Jane Smith": 10
-    }
-}
-```
-
 #### Get System Analytics
-```http
+```
 GET /api/analytics/system
 Authorization: Bearer {token}
 ```
 
-**Response:**
-```json
-{
-    "totalUsers": 25,
-    "totalBoards": 40,
-    "totalTasks": 350,
-    "totalHours": 2800,
-    "tasksByStatus": {
-        "TO_DO": 120,
-        "DOING": 80,
-        "DONE": 150
-    },
-    "completionRate": 42.86,
-    "topDevelopers": [
-        {
-            "developer": "John Doe",
-            "taskCount": 45,
-            "totalHours": 360
-        }
-    ]
-}
-```
-
 #### Get Developer Analytics
-```http
-GET /api/analytics/developer/{developerName}
+```
+GET /api/analytics/developer/Robyn Harrison
 Authorization: Bearer {token}
 ```
 
 #### Get Completion Trends
 ```http
-GET /api/analytics/board/{boardId}/trends
+GET /api/analytics/board/1/trends
 Authorization: Bearer {token}
 ```
 
@@ -591,17 +477,6 @@ Authorization: Bearer {token}
 3. **Token Storage**: Client stores token (localStorage, sessionStorage)
 4. **Authenticated Requests**: Client includes token in Authorization header
 5. **Token Validation**: Server validates token on each request
-
-### JWT Token Structure
-
-```json
-{
-    "sub": "username",
-    "userId": 1,
-    "iat": 1634567890,
-    "exp": 1634654290
-}
-```
 
 ### Password Validation Rules
 
@@ -617,53 +492,11 @@ Authorization: Bearer {token}
 
 ### Using JWT Token in Requests
 
-```http
+```
 GET /api/tasks
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VybmFtZSIsInVzZXJJZCI6MSwiaWF0IjoxNjM0NTY3ODkwLCJleHAiOjE2MzQ2NTQyOTB9...
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VybmFtZSIs...
 ```
 
-## 🧪 Testing
-
-### Run All Tests
-
-```bash
-mvn test
-```
-
-### Run Specific Test Class
-
-```bash
-mvn test -Dtest=UserServiceTest
-```
-
-### Run with Coverage
-
-```bash
-mvn clean test jacoco:report
-```
-
-### Test Categories
-
-- **Unit Tests**: Service layer business logic
-- **Integration Tests**: Repository and database operations
-- **Controller Tests**: REST API endpoint testing
-- **Security Tests**: Authentication and authorization
-
-### Example Test Structure
-
-```java
-@SpringBootTest
-class TaskServiceTest {
-    
-    @Autowired
-    private TaskService taskService;
-    
-    @Test
-    void testCreateTask() {
-        // Test implementation
-    }
-}
-```
 
 ## 📊 Key Features Explained
 
@@ -675,12 +508,6 @@ Example: `LO:1:BYN` for:
 - Task Name: **LO**gin Feature
 - Database ID: **1**
 - Developer: Ro**BYN** Harrison
-
-### Task Status Workflow
-
-```
-TO_DO → DOING → DONE
-```
 
 ### Analytics Calculations
 
@@ -714,23 +541,12 @@ git push origin feature/YourFeatureName
 
 5. **Open a Pull Request**
 
-### Coding Standards
-
-- Follow Java naming conventions
-- Use meaningful variable and method names
-- Add JavaDoc comments for public methods
-- Write unit tests for new features
-- Ensure all tests pass before submitting PR
-- Follow REST API best practices
-
 ## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ```
 MIT License
 
-Copyright (c) 2025 EasyKanban Development Team
+Copyright (c) 2025 Nia Diale
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -751,17 +567,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## 📞 Contact
-
-**Project Repository**: [EasyKanban Backend](https://github.com/yourusername/easykanban-backend)
-
-### Support
-
-If you encounter any issues or have questions:
-
-1. Check existing [Issues](https://github.com/yourusername/easykanban-backend/issues)
-2. Create a new issue with detailed description
-3. Contact the repository maintainer
 
 ## 🙏 Acknowledgments
 
